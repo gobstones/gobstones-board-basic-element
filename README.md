@@ -1,6 +1,8 @@
 # gobstones-board-basic-element
 
-An element providing a starting point for your own reusable Polymer elements.
+A basic board element that renders the result of a gobstones program.
+
+ - [Documentation](https://gobstones.github.io/gobstones-board-basic-element)
 
 
 ## Dependencies
