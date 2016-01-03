@@ -2,7 +2,7 @@
 
 A basic board element that renders the result of a gobstones program.
 
- - [Documentation](https://gobstones.github.io/gobstones-board-basic-element)
+ - [Documentation](http://gobstones.github.io/gobstones-board-basic-element/components/gobstones-board-basic-element/)
 
 
 ## Dependencies
