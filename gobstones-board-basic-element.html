@@ -1,0 +1,206 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../lodash-element/lodash.js.html">
+
+<!--
+A basic board element that renders the result of a gobstones program.
+
+Example:
+
+    <gobstones-board-basic-element></gobstones-board-basic-element>
+
+Example:
+
+    <gobstones-board-basic-element>
+      <h2>Hello gobstones-board-basic-element</h2>
+    </gobstones-board-basic-element>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="gobstones-board-basic-element">
+    <template>
+        <style>
+            :host {
+                display: block;
+                box-sizing: border-box;
+            }
+
+            .board-container {
+                font-family: Arial, Helvetica, sans-serif;
+                display: inline-block;
+                padding: 20px;
+                background-color: white;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                border-radius: 10px;
+            }
+
+            .cell {
+                height: 50px;
+                width: 50px;
+                background-color: #FFED94;
+                margin: 1px;
+            }
+
+            .label {
+                color: #bababa;
+                padding: 3px;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+        </style>
+
+        <content></content>
+
+        <div class="board-container">
+            <table class="gbs_board">
+                <tr>
+                    <td class="label"></td>
+                    <template is="dom-repeat" items="{{_positionsX}}" as="x">
+                        <td class="label">{{x}}</td>
+                    </template>
+                    <td class="label"></td>
+                </tr>
+                <template is="dom-repeat" items="{{_positionsY}}" as="y">
+                    <tr>
+                        <td class="label">{{y}} </td>
+                        <template is="dom-repeat" items="{{_positionsX}}" as="x">
+                            <td class="cell"></td>
+                        </template>
+                        <td class="label">{{y}} </td>
+                    </tr>
+                </template>
+                <tr>
+                    <td class="label"></td>
+                    <template is="dom-repeat" items="{{_positionsX}}" as="x">
+                        <td class="label">{{x}}</td>
+                    </template>
+                    <td class="label"></td>
+                </tr>
+            </table>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'gobstones-board-basic-element',
+
+
+            properties: {
+
+                /**
+                 * Number of columns in the board.
+                 */
+                width: {
+                    type: Number, value: function () {
+                        return 7
+                    }
+                },
+
+                /**
+                 * Number of rows in the board.
+                 */
+                height: {
+                    type: Number, value: function () {
+                        return 7
+                    }
+                },
+
+                /**
+                 * Private calculated list of columns on X axis
+                 *
+                 * */
+                _positionsX: {
+                    type: Array, computed: '_range(width)', value: function () {
+                        return _.range(5)
+                    }
+                },
+
+                /**
+                 * Private calculated list of columns on Y axis
+                 *
+                 * */
+                _positionsY: {
+                    type: Array, computed: '_rangeInverted(height)', value: function () {
+                        return _.range(5).reverse()
+                    }
+                },
+
+                /**
+                 * The board itself, made out of cells with {{position:[x,y],stones:[...]}}
+                 *
+                 * @type {{ name: String, cells: Array }}
+                 */
+                board: {
+                    type: Object,
+                    value: function () {
+                        return {
+                            name: 'Resultado',
+                            cells: [
+                                {
+                                    position: [1, 2],
+                                    stones: {black: 0, blue: 0, green: 0, red: 0}
+                                }
+                            ]
+                        };
+                    }
+                }
+            },
+
+
+            // Element Lifecycle
+
+            ready: function () {
+                // `ready` is called after all elements have been configured, but
+                // propagates bottom-up. This element's children are ready, but parents
+                // are not.
+                //
+                // This is the point where you should make modifications to the DOM (when
+                // necessary), or kick off any processes the element wants to perform.
+            },
+
+            attached: function () {
+                // `attached` fires once the element and its parents have been inserted
+                // into a document.
+                //
+                // This is a good place to perform any work related to your element's
+                // visual state or active behavior (measuring sizes, beginning animations,
+                // loading resources, etc).
+            },
+
+            detached: function () {
+                // The analog to `attached`, `detached` fires when the element has been
+                // removed from a document.
+                //
+                // Use this to clean up anything you did in `attached`.
+            },
+
+            // Element Behavior
+
+            /**
+             * Private method used cells rendering
+             * @param toNumber
+             * @returns {Array} of a sequence of numbers from 0 to `toNumber`
+             */
+            _range: function (toNumber) {
+                return _.range(toNumber)
+            },
+
+            _rangeInverted: function (toNumber) {
+                return _.range(toNumber).reverse()
+            }
+        });
+    </script>
+</dom-module>
